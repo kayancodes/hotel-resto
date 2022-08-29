@@ -1,0 +1,40 @@
+{% extends "back-office.html.twig" %}
+
+{% block title %}Liste des chambres
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des chambres disponibles</h1>
+	<table class="table table-striped">
+		<thead>
+			<th style="width:5%">id</th>
+			<th style="width:10%">titre</th>
+			<th style="width:25%">Description courte</th>
+			<th style="width:25%">Description longue</th>
+			<th style="width:15%">Photo</th>
+			<th style="width:10%">Prix</th>
+			<th style="width:10%">Created at</th>
+			<th style="width:15%">actions</th>
+		</thead>
+		<tbody>
+			{% for chambre in chambres %}
+				<tr>
+					<td>{{chambre.id}}</td>
+					<td>{{chambre.titre}}</td>
+					<td>{{chambre.DescriptionCourte}}</td>
+					<td>{{chambre.DescriptionLongue}}</td>
+					<td><img src="/upload{{ asset(chambre.photo) }}" alt="" class="img-fluid"></td>
+					<td class="text-end">{{chambre.Prix | deviseFr}}</td>
+					<td>{{chambre.CreatedAt|date("d/m/Y")}}</td>
+					<td>
+						{% include "commun/action.html.twig" with {"id" : chambre.id, "update": "chambre_update", "delete" : "chambre_suppr" } %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">aucune chambre enregistrée pour le moment</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}

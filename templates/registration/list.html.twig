@@ -1,0 +1,44 @@
+{% extends "back-office.html.twig" %}
+
+{% block title %}Liste des chambres
+{% endblock %}
+
+{% block body %}
+	<h1>Liste des membres disponibles</h1>
+	<table class="table table-striped">
+		<thead>
+			<th style="width:5%">id</th>
+			<th style="width:10%">sexe</th>
+			<th style="width:25%">pseudo</th>
+			<th style="width:25%">prenom</th>
+			<th style="width:15%">nom</th>
+			<th style="width:10%">email</th>
+			<th style="width:10%">role</th>
+			<th style="width:10%">Date de création</th>
+			<th style="width:15%">actions</th>
+		</thead>
+		<tbody>
+			{% for membre in membres %}
+				<tr>
+					<td>{{membre.id}}</td>
+					<td>{{membre.sexe}}</td>
+					<td>{{membre.pseudo}}</td>
+					<td>{{membre.prenom}}</td>
+					<td>{{membre.nom}}</td>
+					<td>{{membre.email}}</td>
+					{# <td>{{membre.roles | join(",")}}</td> #}
+					<td>{{membre.roles | role }}</td>
+					{# roleS avec un S comme dans ENTITY user.php #}
+					<td>{{membre.CreatedAt|date("d/m/Y")}}</td>
+					<td>
+						{% include "commun/action.html.twig" with {"id" : membre.id, "update": "register_update", "delete" : "register_suppr" } %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="8">aucune chambre enregistrée pour le moment</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}
